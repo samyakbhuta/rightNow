@@ -28,7 +28,7 @@
 //TODO : Have lot of console.out of debuggin, but let it spit only when we use NODE_ENV="development"
 //TODO : Have only activityMessage update possible.
 //TODO : Provide authentication support.
-
+//TODO : As soon as client is connected everyone.now.updateLocation() should be called.
 var geo = require("geo");
 var nowjs=require("now");
 var express = require("express");
@@ -74,7 +74,7 @@ httpServer.configure("production",function(){
 
 httpServer.get("/update/a/:activityMessage",function(req,res){	
 	currentActivityMessage = req.params.activityMessage;
-	everyone.now.updateLocation("<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
+	c"<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
 	res.end();
 });
 
