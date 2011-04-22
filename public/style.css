@@ -1,0 +1,9 @@
+h1,h2,h3 {
+ color:MediumSlateBlue;
+}
+.code-text
+{
+background-color:LightCyan;
+border-top: dotted blue 2px;
+border-bottom: dotted blue 2px;
+}

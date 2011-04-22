@@ -1,0 +1,38 @@
+<html>
+<head>
+<title> RightNow - where you are ?</title>
+<link rel="stylesheet" href="style.css"></link>
+</head>
+<body>
+<h3>RightNow</h3>
+Let everybody know and embed where you are.
+<h3>Philosophy</h3>
+You tell it to you personal node.js server and it tells to eveybody who are interested.
+<h3>What interested people have to do ?</h3>
+Simply copy the code like you see down.Paste/embed it in their webpage, blogs etc. That's it. See <a href="where.html">example page</a>.
+
+<a href="#">Generate code</a>.
+<div class="code-text">
+<pre>
+&lt;script src="jquery.min.js"&gt&lt/script&gt
+&lt;script src="nowjs/now.js"&gt&lt/script&gt
+&lt;script type="text/javascript"&gt
+
+$(document).ready(function() {
+	//Create a bar with a div on top to show the position updates.
+	//Default the message to "No position available, yet !"
+	$('body').append('&ltdiv id="rightNowPosition" style="position:absolute;bottom:0;left:0;width:100%;background-color:orange;font-size:2.5em"&gtNo position available, yet !&lt/div&gt');
+});
+
+now.ready(function (){
+});
+
+now.updateLocation = function(newPositionData){
+	$('#rightNowPosition').text("New location : " + newPositionData.lng+ "," + newPositionData.lat);
+	//document.write("New location : " + newPositionData.lng+ "," + newPositionData.lat+ "<br/>");
+}
+&lt/script&gt
+</pre>
+</div>
+</body>
+</html>

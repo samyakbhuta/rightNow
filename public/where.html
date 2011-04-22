@@ -1,0 +1,25 @@
+<html>
+<head>
+<script src="jquery.min.js"></script>
+<script src="nowjs/now.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		//Create a bar with a div on top to show the position updates.
+		//Default the message to "No position available, yet !"
+		$('body').append('<div id="rightNowPosition" style="position:absolute;bottom:0;left:0;width:100%;background-color:orange;font-size:2.5em">No position available, yet !</div>');
+	});
+
+	now.ready(function (){
+	});
+
+	now.updateLocation = function(newPositionData){
+		$('#rightNowPosition').text("RightNow @ " + newPositionData.lng+ "," + newPositionData.lat);
+		//document.write("New location : " + newPositionData.lng+ "," + newPositionData.lat+ "<br/>");
+	}
+</script>
+</head>
+<body>
+<h1>RightNow</h1>
+Lorem Ipsum ... see the bottom of the page to know where agent 007 is ?
+</body>
+</html>
