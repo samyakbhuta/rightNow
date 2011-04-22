@@ -26,9 +26,8 @@
 //TODO : WebAdmin:Let the config.json file be web editable.
 //TODO : WebAdmin:Let the application instance start and stop using web interface.
 //TODO : Have lot of console.out of debuggin, but let it spit only when we use NODE_ENV="development"
-//TODO : Have only activityMessage update possible.
 //TODO : Provide authentication support.
-//TODO : As soon as client is connected everyone.now.updateLocation() should be called.
+
 
 var geo = require("geo");
 var nowjs=require("now");
