@@ -19,7 +19,7 @@
 		"example.org:1234/update/a/mocha + node.js"
 */
 
-//TODO : Need to store nameofRightNower(or broadcaster), lastUpdatedTimestamp, photo or avatar
+//TODO : Need to store nameOfRightNower(or broadcaster), photo or avatar
 //TODO : Unit testing
 //TODO : Dummy Library with lots of factory method in it.
 //TODO : Let default host and port be changed using command line arguments, or using config.json file.
@@ -47,6 +47,8 @@ var currentActivityMessage = "No updates, yet !";
 var currentFormattedAddress = "";
 var currentLng = "0.0";
 var currentLat = "0.0";
+var lastLocationUpdateTimestamp=+new Date();
+var lastActivityMessageUpdateTimestamp=+new Date();
 
 var httpServer = express.createServer();
 var everyone = nowjs.initialize(httpServer);
@@ -79,6 +81,7 @@ In this case the only data which has been changed is currentActivityMessage. Apa
 */
 httpServer.get("/update/a/:activityMessage",function(req,res){	
 	currentActivityMessage = req.params.activityMessage;
+	lastActivityMessageUpdateTimestamp=+new Date();
 	everyone.now.updateLocation("<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
 	res.end();
 });
@@ -89,6 +92,7 @@ Based on raw location name string we need to find out rest of the position detai
 We use "geo" module for the same.		
 */
 httpServer.get("/update/:locationName/:activityMessage",function(req,res){
+	lastLocationUpdateTimestamp=lastActivityMessageUpdateTimestamp=+new Date();
 	currentLocationName = req.params.locationName;
 	currentActivityMessage = req.params.activityMessage;
 	geo.geocoder(geo.google,req.params.locationName, false, function(formattedAddress, latitude, longitude) {
