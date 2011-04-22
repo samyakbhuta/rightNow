@@ -12,9 +12,8 @@
 	now.ready(function (){
 	});
 
-	now.updateLocation = function(newPositionData){
-		$('#rightNowPosition').text("RightNow @ " + newPositionData.lng+ "," + newPositionData.lat);
-		//document.write("New location : " + newPositionData.lng+ "," + newPositionData.lat+ "<br/>");
+	now.updateLocation = function(locationName,activityMessage){
+		$('#rightNowPosition').text("RightNow @ " + locationName + " - " + activityMessage);
 	}
 </script>
 </head>
