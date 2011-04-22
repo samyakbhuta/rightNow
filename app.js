@@ -29,6 +29,7 @@
 //TODO : Have only activityMessage update possible.
 //TODO : Provide authentication support.
 //TODO : As soon as client is connected everyone.now.updateLocation() should be called.
+
 var geo = require("geo");
 var nowjs=require("now");
 var express = require("express");
@@ -41,11 +42,11 @@ var PORT = 1234;
 /*
 Note: We are not putting current status data under everyone.now. We are relying on the function calls strictly as recommended by nowjs documentation. 
 */
-var currentLocationName = "Not Set";
-var currentActivityMessage = "Not Set";
-var currentFormattedAddress = "Not Set";
-var currentLng = "Not Set";
-var currentLat = "Not Set";
+var currentLocationName = "Not known";
+var currentActivityMessage = "No updates, yet !";
+var currentFormattedAddress = "";
+var currentLng = "0.0";
+var currentLat = "0.0";
 
 var httpServer = express.createServer();
 var everyone = nowjs.initialize(httpServer);
@@ -55,8 +56,8 @@ httpServer.configure(function(){
 });
 
 /*
- 	Use $> node NODE_ENV='development' app.js to activate the development mode
-	Use $> node NODE_ENV='production' app.js to activate the production mode
+Use $> node NODE_ENV='development' app.js to activate the development mode
+Use $> node NODE_ENV='production' app.js to activate the production mode
 */
 httpServer.configure("development",function(){
 	httpServer.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
@@ -67,22 +68,25 @@ httpServer.configure("production",function(){
 	httpServer.use(express.static(__dirname + '/public', { maxAge: oneYear }));
 });
 
-/*
-	Example : example.com:1234/a/hacking the node.js
-	In this case the only data which has been changed is currentActivityMessage. Apart from that all data remains unchanged.
-*/
 
+everyone.connected(function(){
+	everyone.now.updateLocation("<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
+});
+
+/*
+Example : example.com:1234/a/hacking the node.js
+In this case the only data which has been changed is currentActivityMessage. Apart from that all data remains unchanged.
+*/
 httpServer.get("/update/a/:activityMessage",function(req,res){	
 	currentActivityMessage = req.params.activityMessage;
-	c"<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
+	everyone.now.updateLocation("<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
 	res.end();
 });
 
-
 /*
-	Example : example.com:1234/update/vadodara/hacking the node.js
-	Based on raw location name string we need to find out rest of the position details with geo code lookup.
-	We use "geo" module for the same.		
+Example : example.com:1234/update/vadodara/hacking the node.js
+Based on raw location name string we need to find out rest of the position details with geo code lookup.
+We use "geo" module for the same.		
 */
 httpServer.get("/update/:locationName/:activityMessage",function(req,res){
 	currentLocationName = req.params.locationName;
