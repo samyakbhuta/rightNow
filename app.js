@@ -9,9 +9,14 @@
 				 [+now.js]			|---------->--Client5==>==Display It On Sceen
 
 	GET Request could be
+		1)Just location information
+		"example.org:1234/update/vadodara"
+		"example.org:1234/update/?lat=22_10_00_N&lng=71_18_01_E"
+		2) With location and activity
 		"example.org:1234/update/vadodara/mocha + node.js"
 		"example.org:1234/update/mumbai/with friends for Kalaghoda Art Festival"
-
+		3)
+		"example.org:1234/update/a/mocha + node.js"
 */
 
 //TODO : Need to store nameofRightNower(or broadcaster), lastUpdatedTimestamp, photo or avatar
@@ -21,6 +26,10 @@
 //TODO : WebAdmin:Let the config.json file be web editable.
 //TODO : WebAdmin:Let the application instance start and stop using web interface.
 //TODO : Have lot of console.out of debuggin, but let it spit only when we use NODE_ENV="development"
+//TODO : Have only activityMessage update possible.
+//TODO : Shuold store the last status data.
+//TODO : Shuold have a db support for history of status changes. Makes up a good itinerary app ;)
+//TODO : Provide authentication support.
 
 var geo = require("geo");
 var nowjs=require("now");
