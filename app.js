@@ -27,8 +27,6 @@
 //TODO : WebAdmin:Let the application instance start and stop using web interface.
 //TODO : Have lot of console.out of debuggin, but let it spit only when we use NODE_ENV="development"
 //TODO : Have only activityMessage update possible.
-//TODO : Shuold store the last status data.
-//TODO : Shuold have a db support for history of status changes. Makes up a good itinerary app ;)
 //TODO : Provide authentication support.
 
 var geo = require("geo");
@@ -40,7 +38,14 @@ Default host and port !
 */
 var HOST = "localhost";
 var PORT = 1234;
-
+/*
+Note: We are not putting current status data under everyone.now. We are relying on the function calls strictly as recommended by nowjs documentation. 
+*/
+var currentLocationName = "Not Set";
+var currentActivityMessage = "Not Set";
+var currentFormattedAddress = "Not Set";
+var currentLng = "Not Set";
+var currentLat = "Not Set";
 
 var httpServer = express.createServer();
 var everyone = nowjs.initialize(httpServer);
@@ -63,16 +68,30 @@ httpServer.configure("production",function(){
 });
 
 /*
+	Example : example.com:1234/a/hacking the node.js
+	In this case the only data which has been changed is currentActivityMessage. Apart from that all data remains unchanged.
+*/
+
+httpServer.get("/update/a/:activityMessage",function(req,res){	
+	currentActivityMessage = req.params.activityMessage;
+	everyone.now.updateLocation("<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
+	res.end();
+});
+
+
+/*
 	Example : example.com:1234/update/vadodara/hacking the node.js
 	Based on raw location name string we need to find out rest of the position details with geo code lookup.
 	We use "geo" module for the same.		
 */
-
-httpServer.get("/update/:locationName/:activityMessage",function(req,res){	
-		var address = req.params.locationName;
-		var sensor = false;
-		geo.geocoder(geo.google, address, sensor, function(formattedAddress, latitude, longitude) {
-			everyone.now.updateLocation("<a href='http://www.google.com/#q="+formattedAddress+"'>"+req.params.locationName+"</a>",req.params.activityMessage);
+httpServer.get("/update/:locationName/:activityMessage",function(req,res){
+	currentLocationName = req.params.locationName;
+	currentActivityMessage = req.params.activityMessage;
+	geo.geocoder(geo.google,req.params.locationName, false, function(formattedAddress, latitude, longitude) {
+			currentFormattedAddress = formattedAddress;
+			currentLng = latitude;
+			currentLat = longitude;
+			everyone.now.updateLocation("<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
 			/*if (developmentMode)
 			console.log("Formatted Address: " + formattedAddress);
 			console.log("Latitude: " + latitude);
