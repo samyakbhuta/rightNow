@@ -33,6 +33,14 @@ var geo = require("geo");
 var nowjs=require("now");
 var express = require("express");
 var fs = require("fs");
+var mongoose = require('mongoose')
+var myModel = require("./updates").myModel;
+
+/**
+ * Define model.
+ */
+
+mongoose.connect("mongodb://localhost/db");
 
 config = JSON.parse(fs.readFileSync('./config.json'));
 
@@ -92,7 +100,23 @@ In this case the only data which has been changed is currentActivityMessage. Apa
 httpServer.get("/update/a/:activityMessage",express.basicAuth(USERNAME,SECRET),function(req,res){	
 	currentActivityMessage = req.params.activityMessage;
 	lastActivityMessageUpdateTimestamp=+new Date();
+
 	everyone.now.updateLocation( NICK + " <a href='http://www.google.com/#q="+currentFormattedAddress+"'>@"+currentLocationName+"</a>",currentActivityMessage);
+
+	var anUpdateInstance = new myModel();
+	anUpdateInstance.location = currentLocationName;
+	anUpdateInstance.activity = currentActivityMessage;
+	anUpdateInstance.timestamp = lastLocationUpdateTimestamp;
+	console.log(anUpdateInstance);
+
+	anUpdateInstance.save(function(err){
+		if (err==null){
+			console.log("Saved");
+		}else {
+			console.log("Couldn't save " + err);
+		}
+	});
+
 	res.end();
 });
 
@@ -116,6 +140,20 @@ httpServer.get("/update/:locationName/:activityMessage",express.basicAuth(USERNA
 			console.log("Longitude: " + longitude);
 			*/
 		});
+
+	var anUpdateInstance = new myModel();
+	anUpdateInstance.location = currentLocationName;
+	anUpdateInstance.activity = currentActivityMessage;
+	anUpdateInstance.timestamp     = lastLocationUpdateTimestamp;
+	console.log(anUpdateInstance);
+
+	anUpdateInstance.save(function(err){
+		if (err==null){
+			console.log("Saved");
+		}else {
+			console.log("Couldn't save " + err);
+		}
+	});
 	res.end();
 });
 
