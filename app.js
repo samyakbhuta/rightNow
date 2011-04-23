@@ -22,31 +22,37 @@
 //TODO : Need to store nameOfRightNower(or broadcaster), photo or avatar
 //TODO : Unit testing
 //TODO : Dummy Library with lots of factory method in it.
-//TODO : Let default host and port be changed using command line arguments, or using config.json file.
+//TODO : Let default host and port be changed using command line arguments.
 //TODO : WebAdmin:Let the config.json file be web editable.
 //TODO : WebAdmin:Let the application instance start and stop using web interface.
 //TODO : Have lot of console.out of debuggin, but let it spit only when we use NODE_ENV="development"
+//TODO : Let there be a history of what were the updates in some db.
 
 
 
 var geo = require("geo");
 var nowjs=require("now");
 var express = require("express");
+var fs = require("fs");
+
+config = JSON.parse(fs.readFileSync('./config.json'));
 
 /*
 Default host and port ! This should be ideally specified using command line or config.json file. Default are here just in the case nothing is supplied.
 */
-var HOST = "localhost";
-var PORT = 1234;
+var HOST = config && config.host || "localhostaaa";
+var PORT = config && config.port || 1234;
 
 /*
 Default username and password ! This should be ideally specified using command line or config.json file. Default are here just in the case nothing is supplied.
 */
-var USERNAME = "admin";
-var SECRET = "admin";
+var USERNAME = config && config.username || "admin";
+var SECRET = config && config.secret || "admin";
+var NICK = config && config.usernick || "admin";
 /*
 Note: We are not putting current status data under everyone.now. We are relying on the function calls strictly as recommended by nowjs documentation. 
 */
+
 var currentLocationName = "Not known";
 var currentActivityMessage = "No updates, yet !";
 var currentFormattedAddress = "";
@@ -77,7 +83,7 @@ httpServer.configure("production",function(){
 
 
 everyone.connected(function(){
-	everyone.now.updateLocation("<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
+	everyone.now.updateLocation( NICK + " <a href='http://www.google.com/#q="+currentFormattedAddress+"'>@"+currentLocationName+"</a>",currentActivityMessage);
 });
 
 /*
@@ -87,7 +93,7 @@ In this case the only data which has been changed is currentActivityMessage. Apa
 httpServer.get("/update/a/:activityMessage",express.basicAuth(USERNAME,SECRET),function(req,res){	
 	currentActivityMessage = req.params.activityMessage;
 	lastActivityMessageUpdateTimestamp=+new Date();
-	everyone.now.updateLocation("<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
+	everyone.now.updateLocation( NICK + " <a href='http://www.google.com/#q="+currentFormattedAddress+"'>@"+currentLocationName+"</a>",currentActivityMessage);
 	res.end();
 });
 
@@ -104,7 +110,7 @@ httpServer.get("/update/:locationName/:activityMessage",express.basicAuth(USERNA
 			currentFormattedAddress = formattedAddress;
 			currentLng = latitude;
 			currentLat = longitude;
-			everyone.now.updateLocation("<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
+			everyone.now.updateLocation( NICK + " <a href='http://www.google.com/#q="+currentFormattedAddress+"'>@"+currentLocationName+"</a>",currentActivityMessage);
 			/*if (developmentMode)
 			console.log("Formatted Address: " + formattedAddress);
 			console.log("Latitude: " + latitude);
