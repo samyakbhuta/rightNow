@@ -60,7 +60,6 @@ var everyone = nowjs.initialize(httpServer);
 
 httpServer.configure(function(){
 	httpServer.use(express.logger());
-	httpServer.use(express.basicAuth(USERNAME,SECRET));
 });
 
 /*
@@ -85,7 +84,7 @@ everyone.connected(function(){
 Example : example.com:1234/a/hacking the node.js
 In this case the only data which has been changed is currentActivityMessage. Apart from that all data remains unchanged.
 */
-httpServer.get("/update/a/:activityMessage",function(req,res){	
+httpServer.get("/update/a/:activityMessage",express.basicAuth(USERNAME,SECRET),function(req,res){	
 	currentActivityMessage = req.params.activityMessage;
 	lastActivityMessageUpdateTimestamp=+new Date();
 	everyone.now.updateLocation("<a href='http://www.google.com/#q="+currentFormattedAddress+"'>"+currentLocationName+"</a>",currentActivityMessage);
@@ -97,7 +96,7 @@ Example : example.com:1234/update/vadodara/hacking the node.js
 Based on raw location name string we need to find out rest of the position details with geo code lookup.
 We use "geo" module for the same.		
 */
-httpServer.get("/update/:locationName/:activityMessage",function(req,res){
+httpServer.get("/update/:locationName/:activityMessage",express.basicAuth(USERNAME,SECRET),function(req,res){
 	lastLocationUpdateTimestamp=lastActivityMessageUpdateTimestamp=+new Date();
 	currentLocationName = req.params.locationName;
 	currentActivityMessage = req.params.activityMessage;
