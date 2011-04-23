@@ -26,7 +26,7 @@
 //TODO : WebAdmin:Let the config.json file be web editable.
 //TODO : WebAdmin:Let the application instance start and stop using web interface.
 //TODO : Have lot of console.out of debuggin, but let it spit only when we use NODE_ENV="development"
-//TODO : Provide authentication support.
+
 
 
 var geo = require("geo");
@@ -34,10 +34,16 @@ var nowjs=require("now");
 var express = require("express");
 
 /*
-Default host and port !
+Default host and port ! This should be ideally specified using command line or config.json file. Default are here just in the case nothing is supplied.
 */
 var HOST = "localhost";
 var PORT = 1234;
+
+/*
+Default username and password ! This should be ideally specified using command line or config.json file. Default are here just in the case nothing is supplied.
+*/
+var USERNAME = "admin";
+var SECRET = "admin";
 /*
 Note: We are not putting current status data under everyone.now. We are relying on the function calls strictly as recommended by nowjs documentation. 
 */
@@ -54,6 +60,7 @@ var everyone = nowjs.initialize(httpServer);
 
 httpServer.configure(function(){
 	httpServer.use(express.logger());
+	httpServer.use(express.basicAuth(USERNAME,SECRET));
 });
 
 /*
@@ -110,4 +117,3 @@ httpServer.get("/update/:locationName/:activityMessage",function(req,res){
 
 httpServer.listen(PORT,HOST);
 console.log("listening at http://" + HOST +":"+PORT);
-
