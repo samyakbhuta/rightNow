@@ -22,7 +22,6 @@
 //TODO : Need to store nameOfRightNower(or broadcaster), photo or avatar
 //TODO : Unit testing
 //TODO : Dummy Library with lots of factory method in it.
-//TODO : Let default host and port be changed using command line arguments.
 //TODO : WebAdmin:Let the config.json file be web editable.
 //TODO : WebAdmin:Let the application instance start and stop using web interface.
 //TODO : Have lot of console.out of debuggin, but let it spit only when we use NODE_ENV="development"
