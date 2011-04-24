@@ -1,0 +1,9 @@
+{
+  "appname": "Where is 007",
+  "usernick":"James",
+  "profilePic":"http://example.com/some.png",
+  "host":"localhost",
+  "port":"1234",
+  "username":"james",
+  "secret":"majesty"
+}
