@@ -25,9 +25,6 @@
 //TODO : WebAdmin:Let the config.json file be web editable.
 //TODO : WebAdmin:Let the application instance start and stop using web interface.
 //TODO : Have lot of console.out of debuggin, but let it spit only when we use NODE_ENV="development"
-//TODO : Let there be a history of what were the updates in some db.
-
-
 
 var geo = require("geo");
 var nowjs=require("now");
@@ -88,7 +85,6 @@ httpServer.configure("production",function(){
 	httpServer.use(express.static(__dirname + '/public', { maxAge: oneYear }));
 });
 
-
 everyone.connected(function(){
 	everyone.now.updateLocation( NICK + " <a href='http://www.google.com/#q="+currentFormattedAddress+"'>@"+currentLocationName+"</a>",currentActivityMessage);
 });
@@ -116,7 +112,6 @@ httpServer.get("/update/a/:activityMessage",express.basicAuth(USERNAME,SECRET),f
 			console.log("Couldn't save " + err);
 		}
 	});
-
 	res.end();
 });
 
