@@ -19,7 +19,7 @@
 		"example.org:1234/update/a/mocha + node.js"
 */
 
-//TODO : Need to store nameOfRightNower(or broadcaster), photo or avatar
+//TODO : Need photo or avatar support.
 //TODO : Unit testing
 //TODO : Dummy Library with lots of factory method in it.
 //TODO : WebAdmin:Let the config.json file be web editable.
