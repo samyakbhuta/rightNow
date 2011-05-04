@@ -1,0 +1,20 @@
+{
+  "name": "rightnow",
+  "description": "Tell everybody where are you right now. Foursquare decentralized.",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/samyakbhuta/rightNow.git"
+  },
+  "author": "Samyak Bhuta <samyak.bhuta@gmail.com> (http://twitter.com/samyak_bhuta)",
+  "directories": {
+    "lib": "."
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "geo": "*",
+    "express": "*"
+  }
+}
