@@ -30,7 +30,7 @@ var geo = require("geo");
 var nowjs=require("now");
 var express = require("express");
 var fs = require("fs");
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 var myModel = require("./updates").myModel;
 
 /**
@@ -44,7 +44,7 @@ config = JSON.parse(fs.readFileSync('./config.json'));
 /*
 Default host and port ! This should be ideally specified using command line or config.json file. Default are here just in the case nothing is supplied.
 */
-var HOST = config && config.host || "localhostaaa";
+var HOST = config && config.host || "localhost";
 var PORT = config && config.port || 1234;
 
 /*
