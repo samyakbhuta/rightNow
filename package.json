@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "geo": "*",
-    "express": "*"
+    "express": "*",
+	"now": "*"
   }
 }
