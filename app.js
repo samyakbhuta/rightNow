@@ -82,7 +82,8 @@ httpServer.configure("development",function(){
 });
 httpServer.configure("production",function(){
 	httpServer.use(express.errorHandler());
-	httpServer.use(express.static(__dirname + '/public', { maxAge: oneYear }));
+	//httpServer.use(express.static(__dirname + '/public', { maxAge: oneYear }));
+	httpServer.use(express.static(__dirname + '/public'));
 });
 
 everyone.connected(function(){
