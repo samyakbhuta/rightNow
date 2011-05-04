@@ -33,11 +33,15 @@ var fs = require("fs");
 var mongoose = require('mongoose');
 var myModel = require("./updates").myModel;
 
+
+
+
 /**
  * Define model.
  */
 
-mongoose.connect("mongodb://localhost/db");
+//mongoose.connect("mongodb://localhost/db");
+mongoose.connect(process.env['DUOSTACK_DB_MONGODB']);
 
 config = JSON.parse(fs.readFileSync('./config.json'));
 
